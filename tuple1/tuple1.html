@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cube Calculator</title>
+    <style>
+        /* Body styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #f8f9fa, #e9ecef);
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Input field styling */
+        #cube {
+            padding: 10px 15px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: 2px solid #6c63ff;
+            outline: none;
+            width: 200px;
+            margin-bottom: 20px;
+            transition: border 0.3s;
+        }
+        #cube:focus {
+            border-color: #ff6b6b;
+        }
+
+        /* Button styling */
+        button {
+            padding: 10px 25px;
+            font-size: 18px;
+            border-radius: 8px;
+            border: none;
+            background-color: #6c63ff;
+            color: white;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        button:hover {
+            background-color: #5a52d4;
+            transform: scale(1.05);
+        }
+
+        /* Output paragraph styling */
+        #fet {
+            margin-top: 25px;
+            padding: 15px;
+            width: 250px;
+            background-color: #ffffff;
+            border: 2px solid #6c63ff;
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            font-size: 16px;
+            white-space: pre-line; /* to show \n as new lines */
+        }
+    </style>
+</head>
+<body>
+    <input type="text" id="cube" placeholder="Enter a number">
+    <button onclick="cuberoot()">Calculate Cube</button>
+    <p id="fet"></p>
+
+    <!-- External JS file link -->
+    <script>
+        function cuberoot() {
+    // input lena
+    let num = Number(document.getElementById("cube").value);
+
+    // output paragraph
+    let fet = document.getElementById("fet");
+    fet.innerHTML = ""; // purana result clear
+
+    // loop se cubes calculate karna
+    for (let i = 1; i <= num; i++) {
+        let cube = i ** 3;
+        fet.innerHTML += `Cube of ${i} is ${cube}<br>`;
+    }
+}
+
+    </script>
+</body>
+</html>

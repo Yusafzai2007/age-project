@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chatbot</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #f0f2f5;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .container {
+            display: flex;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            overflow: hidden;
+            width: 800px;
+            max-width: 100%;
+        }
+
+        .chat-section {
+            flex: 2;
+            padding: 20px;
+        }
+
+        h1 {
+            margin-top: 0;
+            color: #333;
+        }
+
+        #chat, #fetch {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        #send {
+            padding: 10px 20px;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        #send:hover {
+            background: #2980b9;
+        }
+
+        .sidebar {
+            flex: 1;
+            background: #f7f7f7;
+            padding: 20px;
+            border-left: 1px solid #ddd;
+        }
+
+        .sidebar h3 {
+            margin-top: 0;
+            color: #555;
+        }
+
+        .question {
+            background: #e1f0ff;
+            padding: 10px;
+            margin: 5px 0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .question:hover {
+            background: #cce4ff;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="chat-section">
+            <h1>Chatbot</h1>
+            <input type="text" id="chat" placeholder="Type your question...">
+            <button id="send" onclick="data()">Send</button>
+            <input type="text" id="fetch" readonly placeholder="Chatbot response will appear here">
+        </div>
+
+        <div class="sidebar">
+            <h3>Possible Questions</h3>
+            <div class="question" onclick="fillQuestion('hello')">hello / hi</div>
+            <div class="question" onclick="fillQuestion('who are you')">Who are you?</div>
+            <div class="question" onclick="fillQuestion('how are you')">How are you?</div>
+            <div class="question" onclick="fillQuestion('what is your name')">What is your name?</div>
+            <div class="question" onclick="fillQuestion('bye')">Bye</div>
+        </div>
+    </div>
+
+    <script src="chat.js"></script>
+    <script>
+        function fillQuestion(text) {
+            document.getElementById('chat').value = text;
+        }
+    </script>
+    <script>
+        // chat.js
+
+function data() {
+    let chat = document.getElementById('chat').value.toLowerCase(); // lowercase
+    let chatdata = document.getElementById('fetch');
+
+    if (chat == 'hello' || chat == 'hi' || chat == 'hellow') {
+        chatdata.value = 'How are you?';
+    } else if (chat == 'who are you') {
+        chatdata.value = 'I am assistant of YousafZai.';
+    } else if (chat == 'how are you') {
+        chatdata.value = "I'm good, thank you! How about you?";
+    } else if (chat == 'what is your name') {
+        chatdata.value = "My name is Chatbot.";
+    } else if (chat == 'bye') {
+        chatdata.value = "Goodbye! Have a nice day.";
+    } else {
+        chatdata.value = "Sorry, I didn't understand that.";
+    }
+
+    document.getElementById('chat').value = ""; // clear input after send
+}
+
+    </script>
+</body>
+</html>

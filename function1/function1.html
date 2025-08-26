@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mean Median Mode Calculator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: linear-gradient(135deg, #74ebd5, #9face6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .container {
+      background: #fff;
+      padding: 25px 30px;
+      border-radius: 15px;
+      box-shadow: 0px 8px 20px rgba(0,0,0,0.15);
+      width: 350px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      margin-bottom: 15px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      outline: none;
+    }
+    input:focus {
+      border-color: #6c63ff;
+    }
+    button {
+      background: #6c63ff;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #574b90;
+    }
+    .output {
+      margin-top: 20px;
+      text-align: left;
+      font-size: 16px;
+      color: #444;
+    }
+    .output p {
+      margin: 6px 0;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h2>Mean Median Mode Calculator</h2>
+    <input type="text" id="mean" placeholder="Enter numbers e.g. 12345">
+    <button onclick="calculate()">Calculate</button>
+    <div class="output" id="output"></div>
+  </div>
+
+  <script>
+    function calculate() {
+      let mea = document.getElementById('mean').value.split('').map(Number);
+
+      // Sort numbers
+      mea.sort((a, b) => a - b);
+
+      // ---------- Mean ----------
+      let score = 0;
+      for (let i = 0; i < mea.length; i++) {
+          score += mea[i];
+      }
+      let mean = score / mea.length;
+
+      // ---------- Median ----------
+      let median;
+      let mid = Math.floor(mea.length / 2);
+      if (mea.length % 2 !== 0) {
+          median = mea[mid];
+      } else {
+          median = (mea[mid - 1] + mea[mid]) / 2;
+      }
+
+      // ---------- Mode ----------
+      let frequency = {};
+      let maxFreq = 0;
+      let mode = [];
+
+      for (let num of mea) {
+          frequency[num] = (frequency[num] || 0) + 1;
+          if (frequency[num] > maxFreq) {
+              maxFreq = frequency[num];
+          }
+      }
+
+      for (let key in frequency) {
+          if (frequency[key] === maxFreq) {
+              mode.push(Number(key));
+          }
+      }
+
+      if (mode.length === mea.length) {
+          mode = [];
+      }
+
+      // ---------- Show on UI ----------
+      document.getElementById("output").innerHTML = `
+        <p><b>Sorted Numbers:</b> ${mea.join(', ')}</p>
+        <p><b>Mean:</b> ${mean}</p>
+        <p><b>Median:</b> ${median}</p>
+        <p><b>Mode:</b> ${mode.length > 0 ? mode.join(', ') : "No mode"}</p>
+      `;
+    }
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Guessing Game</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        input {
+            padding: 10px;
+            font-size: 16px;
+            border-radius: 5px;
+            border: none;
+            margin-right: 10px;
+        }
+
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff6b6b;
+            color: white;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        button:hover {
+            background-color: #ff4757;
+        }
+
+        #messages {
+            margin-top: 20px;
+            background-color: rgba(0,0,0,0.3);
+            padding: 15px;
+            border-radius: 10px;
+            min-width: 250px;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <h1>Number Guessing Game</h1>
+    <div>
+        <input type="number" id="guess" placeholder="Enter a number 0-99">
+        <button onclick="number()">Guess</button>
+    </div>
+    <div id="messages">
+        <p>Score: <span id="score">100</span></p>
+        <p id="output"></p>
+        <p>Random Number: <span id="randomNumber">?</span></p>
+    </div>
+
+    <script>
+        let score = 100;
+        let limitScore = 10;
+        let random = Math.floor(Math.random() * 100);
+
+        function number() {
+            let guess = Number(document.getElementById('guess').value);
+            const output = document.getElementById('output');
+            const scoreEl = document.getElementById('score');
+            const randomEl = document.getElementById('randomNumber');
+
+            // Show random number on every attempt
+            randomEl.textContent = random;
+
+            if (guess === random) {
+                output.textContent = "🎉 Your guess is correct!";
+                scoreEl.textContent = score;
+            } else {
+                score -= limitScore;
+                if (score <= 0) {
+                    score = 0;
+                    output.textContent = "❌ You lost! Game over.";
+                } else if (guess < random) {
+                    output.textContent = "🔼 Too low!";
+                } else {
+                    output.textContent = "🔽 Too high!";
+                }
+                scoreEl.textContent = score;
+            }
+        }
+    </script>
+</body>
+</html>

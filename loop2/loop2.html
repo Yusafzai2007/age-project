@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sieve of Eratosthenes Step by Step</title>
+<style>
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        min-height: 100vh;
+        padding: 40px 20px;
+        color: #333;
+    }
+
+    h1 {
+        color: white;
+        font-size: 2.5rem;
+        margin-bottom: 25px;
+        text-shadow: 2px 2px 6px rgba(0,0,0,0.3);
+    }
+
+    .input-box {
+        background: white;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0px 6px 18px rgba(0,0,0,0.2);
+        display: flex;
+        gap: 10px;
+        align-items: center;
+        margin-bottom: 20px;
+        transition: transform 0.2s ease-in-out;
+    }
+
+    .input-box:hover {
+        transform: scale(1.03);
+    }
+
+    input[type="text"] {
+        padding: 12px;
+        width: 220px;
+        font-size: 16px;
+        border: 2px solid #764ba2;
+        border-radius: 8px;
+        outline: none;
+        transition: border-color 0.3s;
+    }
+
+    input[type="text"]:focus {
+        border-color: #667eea;
+        box-shadow: 0 0 8px rgba(102, 126, 234, 0.5);
+    }
+
+    button {
+        padding: 12px 25px;
+        font-size: 16px;
+        border: none;
+        border-radius: 8px;
+        background: linear-gradient(135deg, #667eea, #764ba2);
+        color: white;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        font-weight: bold;
+        letter-spacing: 1px;
+    }
+
+    button:hover {
+        background: linear-gradient(135deg, #5a67d8, #6b46c1);
+        transform: translateY(-2px);
+        box-shadow: 0px 6px 12px rgba(0,0,0,0.2);
+    }
+
+    #result {
+        margin-top: 20px;
+        width: 100%;
+        max-width: 650px;
+        background: white;
+        padding: 25px;
+        border-radius: 15px;
+        box-shadow: 0px 6px 18px rgba(0,0,0,0.2);
+        animation: fadeIn 0.6s ease-in-out;
+    }
+
+    #result p {
+        margin: 10px 0;
+        line-height: 1.6;
+        font-size: 17px;
+        color: #444;
+        border-left: 4px solid #667eea;
+        padding-left: 10px;
+        background: #f9f9ff;
+        border-radius: 5px;
+    }
+
+    #result p:first-child {
+        font-weight: bold;
+        color: #333;
+    }
+
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+</style>
+</head>
+<body>
+    <h1>Sieve of Eratosthenes</h1>
+    
+    <div class="input-box">
+        <input type="text" id="val" placeholder="Enter a number">
+        <button onclick="gen()">Find Primes</button>
+    </div>
+
+    <div id="result"></div>
+
+<script>
+function gen() {
+    let val = document.getElementById('val').value;
+    let n = Number(val);
+    if (isNaN(n) || n < 2) {
+        alert("Please enter a number greater than 1");
+        return;
+    }
+
+    let isPrime = new Array(n + 1).fill(true);
+    isPrime[0] = isPrime[1] = false;
+
+    let resultDiv = document.getElementById('result');
+    resultDiv.innerHTML = ""; // clear previous results
+
+    // Sieve process
+    for (let i = 2; i <= Math.sqrt(n); i++) {
+        if (isPrime[i]) {
+            let crossedOut = [];
+            for (let j = i * i; j <= n; j += i) {
+                if (isPrime[j]) {
+                    isPrime[j] = false;
+                    crossedOut.push(j); // store the numbers being crossed out
+                }
+            }
+            if (crossedOut.length > 0) {
+                resultDiv.innerHTML += `<p>Multiples of ${i} crossed out: ${crossedOut.join(", ")}</p>`;
+            }
+        }
+    }
+
+    // Show remaining primes
+    let primes = [];
+    for (let i = 2; i <= n; i++) {
+        if (isPrime[i]) primes.push(i);
+    }
+
+    resultDiv.innerHTML += `<p><b>Remaining primes:</b> ${primes.join(", ")}</p>`;
+}
+</script>
+</body>
+</html>

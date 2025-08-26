@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Symmetric Difference Finder (robust input)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #fff;
+      padding: 20px 30px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 420px;
+    }
+    h2 { color: #333; margin-bottom: 12px; }
+    input { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ccc; border-radius: 8px; font-size: 16px; }
+    button { padding: 10px 20px; margin-top: 12px; background-color: #007bff; border: none; border-radius: 8px; color: #fff; font-size: 16px; cursor: pointer; }
+    button:hover { background-color: #0056b3; }
+    .result { margin-top: 15px; padding: 10px; background: #f0f0f0; border-radius: 8px; font-weight: bold; color: #333; min-height: 28px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Find Unique Elements</h2>
+    <input type="text" id="list1" placeholder="Enter first list (e.g. 1,2,3 or 12345)">
+    <input type="text" id="list2" placeholder="Enter second list (e.g. 3,4 or 567)">
+    <button onclick="findSymDiff()">Find</button>
+    <div class="result" id="output"></div>
+    <!-- <div class="hint">
+      Examples: <br>
+      - Comma or space separated: <code>1,2,3</code> or <code>1 2 3</code><br>
+      - Continuous digits treated as characters: <code>12345</code> → <code>1,2,3,4,5</code>
+    </div> -->
+  </div>
+
+  <script>
+    // parse input responsively:
+    function parseInput(str) {
+      str = (str ?? "").trim();
+      if (!str) return [];
+
+      // if user used commas or spaces as separators, split on them
+      if (str.includes(",") || /\s+/.test(str)) {
+        // split on commas or whitespace (one or more)
+        let tokens = str.split(/[\s,]+/).map(t => t.trim()).filter(t => t !== "");
+        return tokens.map(convertIfNumber);
+      } else {
+        // no separators -> treat each character as a separate element
+        return str.split("").map(convertIfNumber);
+      }
+    }
+
+    // convert token to Number if it's a pure number (int or decimal), otherwise keep string
+    function convertIfNumber(token) {
+      // allow negative and decimals as numbers
+      if (/^-?\d+(\.\d+)?$/.test(token)) {
+        return Number(token);
+      }
+      return token;
+    }
+
+    function findSymDiff() {
+      const raw1 = document.getElementById("list1").value;
+      const raw2 = document.getElementById("list2").value;
+
+      const arr1 = parseInput(raw1);
+      const arr2 = parseInput(raw2);
+
+      // remove duplicates while preserving order
+      const uniq1 = [...new Set(arr1)];
+      const uniq2 = [...new Set(arr2)];
+
+      // symmetric difference (preserve order: first unique from list1, then from list2)
+      const onlyIn1 = uniq1.filter(x => !uniq2.includes(x));
+      const onlyIn2 = uniq2.filter(x => !uniq1.includes(x));
+      const symDiff = onlyIn1.concat(onlyIn2);
+
+      const out = document.getElementById("output");
+      if (symDiff.length === 0) {
+        out.innerText = "No unique elements (all values are common).";
+      } else {
+        out.innerText = "Unique Elements: " + symDiff.join(", ");
+      }
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Grading System</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      background-color: #f7f9fc;
+    }
+
+    h2 {
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    input {
+      padding: 10px;
+      width: 250px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #007BFF;
+    }
+
+    button {
+      padding: 10px 20px;
+      font-size: 16px;
+      width: 270px;
+      background-color: #28a745;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-bottom: 10px;
+    }
+
+    button:hover {
+      background-color: #1e7e34;
+    }
+
+    #fetch {
+      border: 2px solid #007BFF;
+      background-color: #e9ecef;
+      text-align: center;
+      font-weight: bold;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+  <h2>Grading System</h2>
+  <input type="number" placeholder="Total Marks" id="Total">
+  <input type="number" placeholder="Obtain Marks" id="Obtain">
+  <input type="number" placeholder="Enter Attendance %" id="per">
+  <button onclick="submit()">Submit</button>
+  <input type="text" placeholder="Your Grade" id="fetch" readonly>
+
+  <script>
+    function submit() {
+      let Obtain = parseFloat(document.getElementById('Obtain').value);
+      let Total = parseFloat(document.getElementById('Total').value);
+      let attendance = parseFloat(document.getElementById('per').value);
+      let fetch = document.getElementById('fetch');
+
+      // Attendance check
+      if (attendance <= 75) {
+        alert("Your attendance is low");
+      }
+
+      // Percentage calculation
+      let percentage = (Obtain / Total) * 100;
+
+      // Grade check
+      if (percentage >= 90 && percentage <= 100) {
+        fetch.value = 'Your Grade is A+';
+      } else if (percentage >= 80 && percentage < 90) {
+        fetch.value = 'Your Grade is B';
+      } else if (percentage >= 70 && percentage < 80) {
+        fetch.value = 'Your Grade is C';
+      } else if (percentage >= 60 && percentage < 70) {
+        fetch.value = 'Your Grade is D';
+      } else {
+        fetch.value = 'You have Passed';
+      }
+    }
+  </script>
+</body>
+</html>

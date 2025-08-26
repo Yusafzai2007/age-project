@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Character Frequency Counter</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    h1 {
+      color: #333;
+    }
+
+    .container {
+      background: white;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      width: 350px;
+      text-align: center;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #ccc;
+      border-radius: 8px;
+      font-size: 16px;
+    }
+
+    button {
+      padding: 10px 20px;
+      background: #007bff;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      background: #0056b3;
+    }
+
+    .result {
+      margin-top: 20px;
+      text-align: left;
+      font-size: 18px;
+      background: #fafafa;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ddd;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Character Frequency Counter</h1>
+    <input type="text" id="userInput" placeholder="Enter a string..." />
+    <br>
+    <button onclick="countFrequencies()">Count</button>
+    <div class="result" id="result"></div>
+  </div>
+
+  <script>
+    function countFrequencies() {
+      let text = document.getElementById("userInput").value;
+      let freq = {};
+
+      // Count frequencies
+      for (let char of text) {
+        freq[char] = (freq[char] || 0) + 1;
+      }
+
+      // Sort alphabetically
+      let sortedFreq = {};
+      Object.keys(freq).sort().forEach(key => {
+        sortedFreq[key] = freq[key];
+      });
+
+      // Show result
+      let resultDiv = document.getElementById("result");
+      resultDiv.innerHTML = "<b>Frequencies:</b><br>" + JSON.stringify(sortedFreq, null, 2);
+    }
+  </script>
+</body>
+</html>

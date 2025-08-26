@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Math Expression Validator</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #121212;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .container {
+      background: #1e1e1e;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(255, 0, 100, 0.5);
+      width: 350px;
+      text-align: center;
+    }
+    h2 {
+      margin-bottom: 20px;
+      color: #ff007f;
+    }
+    input {
+      width: 90%;
+      padding: 10px;
+      border-radius: 8px;
+      border: 1px solid #ff007f;
+      outline: none;
+      font-size: 16px;
+      background: #222;
+      color: white;
+      margin-bottom: 15px;
+    }
+    button {
+      background: #ff007f;
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+    button:hover {
+      background: #ff3399;
+    }
+    .result {
+      margin-top: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+    .valid {
+      color: #00ff88;
+    }
+    .invalid {
+      color: #ff4444;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Expression Validator</h2>
+    <input type="text" id="exprInput" placeholder="Enter expression (e.g. 3+5*(2-1))">
+    <br>
+    <button onclick="checkExpression()">Check</button>
+    <div id="result" class="result"></div>
+  </div>
+
+  <script>
+    function isValidExpression(expr) {
+      // Step 1: Allowed characters
+      const allowed = new Set("0123456789+-*/() ");
+
+      // Step 2: Invalid characters check
+      for (let ch of expr) {
+        if (!allowed.has(ch)) return false;
+      }
+
+      // Step 3: Balanced parentheses
+      let balance = 0;
+      for (let ch of expr) {
+        if (ch === "(") balance++;
+        else if (ch === ")") {
+          balance--;
+          if (balance < 0) return false;
+        }
+      }
+      if (balance !== 0) return false;
+
+      // Step 4: Remove spaces
+      expr = expr.replace(/\s+/g, "");
+      if (expr.length === 0) return false;
+
+      // Step 5: Valid operator placement
+      if ("+*/".includes(expr[0]) || "+-*/".includes(expr[expr.length - 1])) {
+        return false;
+      }
+
+      // Step 6: No two consecutive operators
+      const operators = "+-*/";
+      for (let i = 1; i < expr.length; i++) {
+        if (operators.includes(expr[i]) && operators.includes(expr[i - 1])) {
+          return false;
+        }
+      }
+
+      return true;
+    }
+
+    function checkExpression() {
+      const expr = document.getElementById("exprInput").value;
+      const resultDiv = document.getElementById("result");
+
+      if (isValidExpression(expr)) {
+        resultDiv.textContent = "✅ Valid Expression";
+        resultDiv.className = "result valid";
+      } else {
+        resultDiv.textContent = "❌ Invalid Expression";
+        resultDiv.className = "result invalid";
+      }
+    }
+  </script>
+</body>
+</html>

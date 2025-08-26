@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Remove Duplicates - Last Occurrence (Digit-wise)</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .container {
+      background: #fff;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      text-align: center;
+      width: 350px;
+      max-width: 90%;
+      transition: transform 0.3s ease;
+    }
+
+    .container:hover {
+      transform: translateY(-5px);
+    }
+
+    h2 {
+      margin-bottom: 20px;
+      color: #333;
+      font-size: 22px;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      border: 2px solid #ddd;
+      border-radius: 8px;
+      outline: none;
+      font-size: 16px;
+      margin-bottom: 15px;
+      transition: border 0.3s ease;
+    }
+
+    input:focus {
+      border-color: #667eea;
+      box-shadow: 0 0 6px rgba(102, 126, 234, 0.5);
+    }
+
+    button {
+      width: 100%;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      background: #667eea;
+      color: #fff;
+      cursor: pointer;
+      transition: background 0.3s ease, transform 0.2s ease;
+    }
+
+    button:hover {
+      background: #5a67d8;
+      transform: scale(1.03);
+    }
+
+    #result {
+      font-weight: bold;
+      color: #28a745;
+      margin-top: 15px;
+      font-size: 18px;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Enter a number:</h2>
+    <input type="text" id="inte" placeholder="e.g. 1223452">
+    <button onclick="check()">Check</button>
+    <p>Result: <span id="result"></span></p>
+  </div>
+
+  <script>
+    function check() {
+      let int = document.getElementById('inte').value;
+
+      if (!int) {
+        alert("Please enter a number!");
+        return;
+      }
+
+      let spl = int.trim().split('').map(Number);
+      let seen = new Set();
+      let result = [];
+
+      for (let i = spl.length - 1; i >= 0; i--) {
+        if (!seen.has(spl[i])) {
+          result.push(spl[i]);
+          seen.add(spl[i]);
+        }
+      }
+
+      result.reverse();
+      document.getElementById('result').innerText = result.join('');
+    }
+  </script>
+</body>
+</html>
